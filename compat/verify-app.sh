@@ -16,7 +16,7 @@ helper="$app/Contents/Helpers/SequoiaCast Test Dictation.app"
 count=0
 cert_dir="$(mktemp -d)"
 trap 'rm -rf "$cert_dir"' EXIT
-codesign -d --extract-certificates "$cert_dir/main" "$app" 2>/dev/null
+codesign -d --extract-certificates="$cert_dir/main" "$app" 2>/dev/null
 main_cert="$(shasum -a 256 "$cert_dir/main0" | awk '{print $1}')"
 [ "$main_cert" = "$(cat "$(dirname "$0")/signing-certificate.sha256")" ]
 while IFS= read -r -d '' binary; do
@@ -33,7 +33,7 @@ while IFS= read -r -d '' binary; do
     echo "$signature" | grep -q 'Authority=SequoiaCast Test Signing'
     echo "$signature" | grep -q 'runtime'
     echo "$signature" | grep -q '^Identifier=org.sequoiacast.test'
-    codesign -d --extract-certificates "$cert_dir/nested" "$binary" 2>/dev/null
+    codesign -d --extract-certificates="$cert_dir/nested" "$binary" 2>/dev/null
     [ "$(shasum -a 256 "$cert_dir/nested0" | awk '{print $1}')" = "$main_cert" ]
     otool -L "$binary"
     if otool -l "$binary" | awk '/cmd LC_LOAD_DYLIB/{strong=1;next} /cmd LC_/{strong=0} strong && /FoundationModels.framework/{bad=1} END {exit !bad}'; then
