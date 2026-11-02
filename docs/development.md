@@ -1,3 +1,5 @@
+> This compatibility branch builds **SequoiaCast Test** for macOS 15. See [compatibility build and validation](../compat/README.md) for its isolated identity, signing and manual-only workflow. Upstream instructions below describe the original macOS 26 channel.
+
 # Development
 
 The local loop: set up, build, run, regenerate. Shipping a build is [release.md](release.md);

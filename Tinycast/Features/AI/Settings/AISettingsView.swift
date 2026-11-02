@@ -86,6 +86,9 @@ struct AISettingsView: View {
     }
 
     private var defaultModelFooter: String {
+        if #unavailable(macOS 26.0), settings.defaultModel == nil {
+            return AppleIntelligenceProvider.status().message ?? ""
+        }
         if settings.defaultModel?.isOnDevice == true {
             return String(localized: "Apple Intelligence runs on this Mac. Nothing leaves it.")
         }

@@ -5,17 +5,15 @@ import Foundation
 @Observable
 final class RegionNumberFormatMonitor {
     private(set) var system = RegionNumberFormatMonitor.read()
-    @ObservationIgnored private var token: NotificationCenter.ObservationToken?
+    @ObservationIgnored private var token: NotificationToken?
 
     init() {
-        token = NotificationCenter.default.addObserver(of: Locale.self, for: .currentLocaleDidChange) {
-            [weak self] _ in
-            self?.system = Self.read()
-        }
-    }
-
-    deinit {
-        if let token { NotificationCenter.default.removeObserver(token) }
+        let center = NotificationCenter.default
+        token = NotificationToken(center.addObserver(
+            forName: NSLocale.currentLocaleDidChangeNotification, object: nil, queue: .main
+        ) { [weak self] _ in
+            Task { @MainActor [weak self] in self?.system = Self.read() }
+        }, center: center)
     }
 
     func format(for style: CalcNumberStyle) -> CalcNumberFormat {

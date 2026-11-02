@@ -1,3 +1,5 @@
+> This compatibility branch builds **SequoiaCast Test** for macOS 15. See [compatibility build and validation](../compat/README.md) for its isolated identity, signing and manual-only workflow. Upstream instructions below describe the original macOS 26 channel.
+
 # Testing and verification
 
 How to check that a change holds up. Tinycast has no XCTest target and no UI tests: the automated half

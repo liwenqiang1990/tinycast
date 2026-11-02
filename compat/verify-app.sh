@@ -50,3 +50,13 @@ while IFS= read -r -d '' link; do
     [ -e "$link" ] || { echo "Broken symlink: $link" >&2; exit 1; }
 done < <(find "$app" -type l -print0)
 echo 'Bundle, resources, nested signatures and links verified.'
+entitlements="$cert_dir/entitlements.plist"
+codesign -d --entitlements - --xml "$app" > "$entitlements" 2>/dev/null
+if /usr/libexec/PlistBuddy -c 'Print :com.apple.security.get-task-allow' "$entitlements" >/dev/null 2>&1; then
+    echo 'Release must not carry get-task-allow.' >&2
+    exit 1
+fi
+for entitlement in com.apple.security.cs.allow-jit com.apple.security.automation.apple-events com.apple.security.device.camera com.apple.security.device.audio-input com.apple.security.personal-information.calendars; do
+    [ "$(read_plist "$entitlements" "$entitlement")" = true ]
+done
+echo 'Release entitlements verified.'

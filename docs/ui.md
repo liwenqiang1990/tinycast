@@ -1,3 +1,5 @@
+> This compatibility branch builds **SequoiaCast Test** for macOS 15. See [compatibility build and validation](../compat/README.md) for its isolated identity, signing and manual-only workflow. Upstream instructions below describe the original macOS 26 channel.
+
 # UI & Design System
 
 The design system for Tinycast's UI, written so an agent restyling or extending it stays consistent
