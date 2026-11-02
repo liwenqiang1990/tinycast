@@ -1,6 +1,6 @@
 # SequoiaCast Test — Tinycast 0.12.1 on macOS 15
 
-Work in progress. A successful compile is not a macOS 15 runtime test.
+Release/Debug, all 104 cloud harnesses, and the final macOS 15.8.2 runtime checks passed. See [the exact validation record and limits](VALIDATION.md).
 
 - Baseline: upstream tag `v0.12.1`, commit `ead1f770401b34f69065e279704a119d04609986`.
 - Branch: `compat/v0.12.1-macos15-isolated`.
