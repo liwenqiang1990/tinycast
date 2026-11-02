@@ -53,3 +53,8 @@ Validate launch, Settings, global hotkey, clipboard read/write, snippet expansio
 ## Uninstall
 
 Quit SequoiaCast Test and disable its own Launch at Login if enabled. Remove only SequoiaCast Test.app. Optionally remove the exact test-only data/cache/preferences/config paths listed above. Leave the existing Tinycast.app and all com.tinycast.* paths untouched. No TCC reset is needed. Keep the signing identity for future rebuilds; deleting it changes future permission identity.
+
+## Additional API audit
+
+The first cloud compile (Xcode 26.6 / macOS SDK 26.5) identified macOS 26-only NetworkListener/NetworkConnection, typed NotificationCenter tokens/messages, and POSIX standardized addchdir. The compatibility branch uses NWListener/NWConnection with loopback-only binding, the existing callback validation, bounded requests, timeout/cancel cleanup; classic notifications; and addchdir_np on Sequoia. This preserves MCP OAuth, locale updates, undo/redo and subprocess working directories without raising the deployment floor.
+Local file-search harness passed outside the Codex sandbox; its initial UTType failures inside the sandbox were environmental. Local SwiftLint requires TOOLCHAIN_DIR=/Library/Developer/CommandLineTools and --no-cache in this restricted session.

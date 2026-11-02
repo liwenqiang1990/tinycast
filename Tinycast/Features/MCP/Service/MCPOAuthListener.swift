@@ -82,8 +82,11 @@ final class MCPOAuthListener {
     private func finish(_ result: Result<String, Error>) {
         guard self.result == nil else { return }
         self.result = result
-        if case .failure(let error) = result { ready?.resume(throwing: error) }
-        else { ready?.resume(throwing: CancellationError()) }
+        if case .failure(let error) = result {
+            ready?.resume(throwing: error)
+        } else {
+            ready?.resume(throwing: CancellationError())
+        }
         ready = nil
         reply?.resume(with: result)
         reply = nil
@@ -115,8 +118,7 @@ final class MCPOAuthListener {
 
     private func read(_ id: UUID, bytes: Data, state: String, issuer: String, requiresIssuer: Bool) {
         guard let connection = connections[id], bytes.count < 8192 else { close(id); return }
-        connection.receive(minimumIncompleteLength: 1, maximumLength: 8192 - bytes.count) {
-            [weak self] content, _, complete, error in
+        connection.receive(minimumIncompleteLength: 1, maximumLength: 8192 - bytes.count) { [weak self] content, _, complete, error in
             Task { @MainActor [weak self] in
                 guard let self, self.connections[id] != nil else { return }
                 var next = bytes
@@ -162,8 +164,7 @@ final class MCPOAuthListener {
             + "Connection: close\r\nContent-Length: \(page.utf8.count)\r\n\r\n\(page)"
         if outcome != nil { accepted = true }
         let resolved = outcome
-        connection.send(content: Data(response.utf8), isComplete: true, completion: .contentProcessed {
-            [weak self] _ in
+        connection.send(content: Data(response.utf8), isComplete: true, completion: .contentProcessed { [weak self] _ in
             Task { @MainActor [weak self] in
                 guard let self, self.connections[id] != nil else { return }
                 self.close(id)

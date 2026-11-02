@@ -159,7 +159,7 @@ which has none of `npx`, `uvx` or `node` on it.
 `AppCore` owns `MCPOAuthManager`; Settings and server connections use that same Keychain-backed
 session. `MCPOAuth` and `MCPOAuthRequest` hold Foundation-only protocol decisions, with entropy,
 hashing and time injected. `MCPOAuthService` performs discovery and exchanges; `MCPOAuthListener`
-owns the Network.framework loopback callback.
+owns the Network.framework loopback callback. This compatibility branch uses NWListener/NWConnection with a 16-connection total limit, 8 KiB headers, five-second connection deadlines and explicit cancellation, available on macOS 15.
 
 Sign In probes the MCP endpoint without credentials, reads the Bearer `resource_metadata` challenge,
 or tries path-specific then root RFC 9728 discovery. The first advertised authorization server is
