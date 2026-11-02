@@ -240,6 +240,9 @@ final class AISettingsStore {
     }
 
     func isRouteEnabled(_ source: AIModelSource) -> Bool {
+        if source == .appleIntelligence {
+            guard #available(macOS 26.0, *) else { return false }
+        }
         if let kind = source.installedKind { return enabledInstalledProviders.contains(kind) }
         return !disabledRoutes.contains(source.storageKey)
     }

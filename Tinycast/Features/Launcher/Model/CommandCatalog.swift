@@ -4,12 +4,12 @@ enum CommandCatalog {
     /// Sorted by name for the `AppIndex` invariant; the URL is a placeholder.
     nonisolated static let all: [AppEntry] =
         CommandID.allCases
-        .filter { !$0.isQueryDriven }
+        .filter { !$0.isQueryDriven && $0.isSupported }
         .map { makeEntry($0) }
         .sorted { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending }
 
     nonisolated static func entries(ownedBy owner: SettingsTab) -> [AppEntry] {
-        owner.ownedCommands.map { makeEntry($0) }
+        owner.ownedCommands.filter(\.isSupported).map { makeEntry($0) }
     }
 
     static func command(for entry: AppEntry) -> CommandID? {

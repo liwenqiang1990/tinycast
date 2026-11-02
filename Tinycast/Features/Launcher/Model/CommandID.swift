@@ -201,7 +201,15 @@ enum CommandID: String, CaseIterable, Sendable {
     }
 
     /// A chord carries no query, and none should be able to terminate the app outright.
+    var isSupported: Bool {
+        if self == .translate {
+            if #available(macOS 26.0, *) { return true }
+            return false
+        }
+        return true
+    }
+
     var hotKeyAction: HotKeyAction? {
-        isQueryDriven || self == .quit ? nil : .command(self)
+        isQueryDriven || self == .quit || !isSupported ? nil : .command(self)
     }
 }

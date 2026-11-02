@@ -48,7 +48,7 @@ struct QuickActionsSettingsView: View {
             Group {
                 actionsSection
                 modelSection
-                languageSection
+                if #available(macOS 26.0, *) { languageSection }
             }
             .settingsEnabled(appSettings.quickActionsEnabled)
         }
@@ -90,7 +90,7 @@ struct QuickActionsSettingsView: View {
 
     private var actionsSection: some View {
         Section {
-            ForEach(BuiltInQuickAction.allCases, content: builtInRow)
+            ForEach(BuiltInQuickAction.supportedActions, content: builtInRow)
             ForEach(customActions.actions) { action in
                 SettingsRow(title: action.name, subtitle: subtitle(for: .custom(action))) {
                     SymbolImage(name: action.symbol, size: Theme.Size.quickActionHeaderIcon)

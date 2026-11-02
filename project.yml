@@ -2,7 +2,7 @@ name: Tinycast
 options:
   bundleIdPrefix: com.tinycast
   deploymentTarget:
-    macOS: "26.0"
+    macOS: "15.0"
   createIntermediateGroups: true
   developmentLanguage: en
   groupSortPosition: top
@@ -15,15 +15,15 @@ settings:
     DEVELOPMENT_TEAM: ""
     CODE_SIGN_STYLE: Manual
     # A stable self-signed identity keeps the Accessibility grant across rebuilds. docs/signing.md
-    CODE_SIGN_IDENTITY: "Tinycast Self-Signed"
+    CODE_SIGN_IDENTITY: "SequoiaCast Test Signing"
     SWIFT_STRICT_CONCURRENCY: complete
-    TINYCAST_BUNDLE_IDENTIFIER: com.tinycast.app
+    TINYCAST_BUNDLE_IDENTIFIER: org.sequoiacast.test
   configs:
     Debug:
-      TINYCAST_BUNDLE_IDENTIFIER: com.tinycast.app.dev
-      DICTATION_EXECUTABLE_NAME: Tinycast Dev Dictation
+      TINYCAST_BUNDLE_IDENTIFIER: org.sequoiacast.test.dev
+      DICTATION_EXECUTABLE_NAME: SequoiaCast Dev Dictation
     Release:
-      DICTATION_EXECUTABLE_NAME: Tinycast Dictation
+      DICTATION_EXECUTABLE_NAME: SequoiaCast Test Dictation
       # Release-only: library validation refuses Debug's `.debug.dylib`, whose team never matches.
       ENABLE_HARDENED_RUNTIME: YES
       # Strip the shipped binary (dSYM is still generated first) and drop unused code.
@@ -80,6 +80,7 @@ targets:
           subpath: Contents/Helpers
     settings:
       base:
+        PRODUCT_NAME: SequoiaCast Test
         PRODUCT_BUNDLE_IDENTIFIER: "$(TINYCAST_BUNDLE_IDENTIFIER)"
         INFOPLIST_FILE: Tinycast/Info.plist
         CODE_SIGN_ENTITLEMENTS: Tinycast/Tinycast.entitlements
@@ -93,7 +94,7 @@ targets:
       configs:
         # Debug is its own channel, so a local build never corrupts the installed app's state.
         Debug:
-          PRODUCT_NAME: Tinycast Dev
+          PRODUCT_NAME: SequoiaCast Dev
 
   ClipboardTextHelper:
     type: tool
@@ -136,6 +137,7 @@ targets:
         CFBundleName: "$(DICTATION_EXECUTABLE_NAME)"
         CFBundleDisplayName: "$(DICTATION_EXECUTABLE_NAME)"
         LSUIElement: true
+        LSMinimumSystemVersion: "$(MACOSX_DEPLOYMENT_TARGET)"
     sources:
       - Tinycast/Features/Dictation/Helper
       - Tinycast/Features/Dictation/Model/DictationModel.swift

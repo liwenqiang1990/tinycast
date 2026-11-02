@@ -3,6 +3,7 @@ import Foundation
 /// Mirrors the FoundationModels enum, which lives in `Service/` so this stays Foundation-only.
 enum AppleIntelligenceStatus: Equatable, Sendable {
     case available
+    case requiresNewerOS
     case deviceNotEligible
     case notEnabled
     case modelNotReady
@@ -14,6 +15,8 @@ enum AppleIntelligenceStatus: Equatable, Sendable {
         switch self {
         case .available:
             return nil
+        case .requiresNewerOS:
+            return String(localized: "On-device AI requires macOS 26. External providers remain available.")
         case .deviceNotEligible:
             return String(localized: "This Mac does not support Apple Intelligence.")
         case .notEnabled:

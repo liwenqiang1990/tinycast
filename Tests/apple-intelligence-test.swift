@@ -19,8 +19,13 @@ struct AppleIntelligenceTests {
     static func main() async {
         statusCopyCoversEveryReason()
         deltasFollowCumulativeSnapshots()
-        turnsSplitThePromptFromItsHistory()
-        generationErrorsBecomeReadableFailures()
+        if #available(macOS 26.0, *) {
+            turnsSplitThePromptFromItsHistory()
+            generationErrorsBecomeReadableFailures()
+        } else {
+            expect(AppleIntelligenceProvider.status() == .requiresNewerOS,
+                   "macOS 15 refuses the on-device provider")
+        }
         if ProcessInfo.processInfo.environment["TINYCAST_TEST_APPLE_INTELLIGENCE"] == "1" {
             await onDeviceModelAnswers()
         } else {
@@ -36,7 +41,7 @@ struct AppleIntelligenceTests {
         expect(AppleIntelligenceStatus.available.isAvailable, "available is available")
 
         let unavailable: [AppleIntelligenceStatus] = [
-            .deviceNotEligible, .notEnabled, .modelNotReady
+            .deviceNotEligible, .notEnabled, .modelNotReady, .requiresNewerOS
         ]
         for status in unavailable {
             expect(!status.isAvailable, "\(status) is not available")
@@ -62,6 +67,7 @@ struct AppleIntelligenceTests {
         expect(repeated.delta(from: "Hello").isEmpty, "an unchanged snapshot emits nothing")
     }
 
+    @available(macOS 26.0, *)
     static func turnsSplitThePromptFromItsHistory() {
         let request = AIRequest(
             instructions: "Be brief.",
@@ -106,6 +112,7 @@ struct AppleIntelligenceTests {
         expect(empty.prompt == nil, "a request with no user turn has no prompt")
     }
 
+    @available(macOS 26.0, *)
     static func generationErrorsBecomeReadableFailures() {
         let context = LanguageModelSession.GenerationError.Context(
             debugDescription: "internal-detail-42")

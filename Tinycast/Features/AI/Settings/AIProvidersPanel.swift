@@ -127,8 +127,10 @@ struct AIProvidersPanel: View {
     private var list: some View {
         VStack(spacing: 0) {
             List(selection: $selection) {
-                Section("On This Mac") {
-                    listRow(.appleIntelligence)
+                if #available(macOS 26.0, *) {
+                    Section("On This Mac") {
+                        listRow(.appleIntelligence)
+                    }
                 }
                 Section(String(localized: "ai-installed-tools", defaultValue: "Installed")) {
                     ForEach(InstalledAIKind.allCases) { listRow(.installed($0)) }

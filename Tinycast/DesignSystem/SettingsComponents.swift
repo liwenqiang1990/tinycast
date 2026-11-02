@@ -287,10 +287,10 @@ private struct SettingsEditorPanelSurface: ViewModifier {
         if controlsOnGlass {
             draggable
                 .background(Theme.Colors.panelScrim, in: shape)
-                .glassEffect(.regular, in: shape)
+                .frostedMenu(in: shape)
         } else {
             draggable.background {
-                shape.fill(Theme.Colors.panelScrim).glassEffect(.regular, in: shape)
+                shape.fill(Theme.Colors.panelScrim).frostedMenu(in: shape)
             }
         }
     }

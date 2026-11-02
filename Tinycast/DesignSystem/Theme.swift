@@ -501,7 +501,22 @@ enum Theme {
 }
 
 extension View {
+    @ViewBuilder
     func frosted(in shape: some Shape) -> some View {
-        glassEffect(.regular.interactive(), in: shape)
+        if #available(macOS 26.0, *) {
+            glassEffect(.regular.interactive(), in: shape)
+        } else {
+            frostedMenu(in: shape)
+        }
+    }
+
+    @ViewBuilder
+    func frostedMenu(in shape: some Shape) -> some View {
+        if #available(macOS 26.0, *) {
+            glassEffect(.regular, in: shape)
+        } else {
+            background(.ultraThinMaterial, in: shape)
+                .overlay { shape.stroke(Theme.Colors.border.opacity(0.6), lineWidth: 0.5) }
+        }
     }
 }

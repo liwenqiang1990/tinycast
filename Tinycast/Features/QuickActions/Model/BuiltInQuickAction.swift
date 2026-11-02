@@ -6,6 +6,11 @@ enum BuiltInQuickAction: String, CaseIterable, Codable, Identifiable, Sendable {
     case translate
     case summarize
 
+    static var supportedActions: [Self] {
+        if #available(macOS 26.0, *) { return allCases }
+        return allCases.filter { $0 != .translate }
+    }
+
     var id: String { rawValue }
 
     var title: String { String(localized: titleResource) }

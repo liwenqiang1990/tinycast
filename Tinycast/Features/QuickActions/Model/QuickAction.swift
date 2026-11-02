@@ -9,7 +9,7 @@ enum QuickAction: Hashable, Identifiable, Sendable {
     static let translate = QuickAction.builtIn(.translate)
     static let summarize = QuickAction.builtIn(.summarize)
 
-    static let allBuiltIn: [QuickAction] = BuiltInQuickAction.allCases.map(QuickAction.builtIn)
+    static let allBuiltIn: [QuickAction] = BuiltInQuickAction.supportedActions.map(QuickAction.builtIn)
 
     var id: String {
         switch self {

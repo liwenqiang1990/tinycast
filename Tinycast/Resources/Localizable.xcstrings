@@ -1,6 +1,65 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "On-device AI requires macOS 26. External providers remain available." : {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "On-device AI requires macOS 26. External providers remain available."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lokale KI erfordert macOS 26. Externe Anbieter bleiben verfügbar."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La IA local requiere macOS 26. Los proveedores externos siguen disponibles."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "L’IA locale nécessite macOS 26. Les fournisseurs externes restent disponibles."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "オンデバイスAIにはmacOS 26が必要です。外部プロバイダーは引き続き利用できます。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "기기 내 AI는 macOS 26이 필요합니다. 외부 제공업체는 계속 사용할 수 있습니다."
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A IA local requer macOS 26. Os fornecedores externos continuam disponíveis."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Для локального ИИ требуется macOS 26. Внешние провайдеры остаются доступны."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "本地 AI 需要 macOS 26。外部服务仍可使用。"
+          }
+        }
+      }
+    },
     "" : {
 
     },

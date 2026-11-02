@@ -63,6 +63,9 @@ final class QuickActionCoordinator {
     /// Launcher rows come and go with the switch; the Carbon bindings stay registered.
     func applyEnabled() {
         appIndex.setCommandsVisible(Self.launcherCommands, settings.quickActionsEnabled)
+        if #unavailable(macOS 26.0) {
+            appIndex.setCommandsVisible([.translate], false)
+        }
         applyCustomQuickActionsPresence()
         guard settings.quickActionsEnabled else {
             cancel()
@@ -176,6 +179,9 @@ final class QuickActionCoordinator {
     }
 
     func run(_ action: QuickAction) {
+        if action.usesTranslationFramework {
+            guard #available(macOS 26.0, *) else { return }
+        }
         guard settings.quickActionsEnabled, running == nil else { return }
         let source =
             paletteCoordinator.isVisible

@@ -1,0 +1,83 @@
+name: macOS 15 isolated test
+run-name: SequoiaCast 0.12.1 test · ${{ github.run_number }}
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: macos15-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: macos-26
+    timeout-minutes: 50
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Select Xcode 26
+        shell: bash
+        run: |
+          set -euo pipefail
+          selected="$(find /Applications -maxdepth 1 -name 'Xcode_26*.app' | sort -V | tail -1)"
+          test -n "$selected"
+          echo "DEVELOPER_DIR=$selected/Contents/Developer" >> "$GITHUB_ENV"
+      - name: Install project tools
+        run: brew install xcodegen swiftlint
+      - name: Import project-only signing identity
+        env:
+          SIGNING_P12_BASE64: ${{ secrets.SEQUOIACAST_SIGNING_P12_BASE64 }}
+          SIGNING_P12_PASSWORD: ${{ secrets.SEQUOIACAST_SIGNING_P12_PASSWORD }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          umask 077
+          test -n "$SIGNING_P12_BASE64"
+          test -n "$SIGNING_P12_PASSWORD"
+          keychain="$RUNNER_TEMP/sequoiacast-signing.keychain-db"
+          password="$(openssl rand -base64 32)"
+          echo "::add-mask::$password"
+          printf '%s' "$SIGNING_P12_BASE64" | base64 --decode > "$RUNNER_TEMP/project-signing.p12"
+          trap 'rm -f "$RUNNER_TEMP/project-signing.p12"' EXIT
+          security create-keychain -p "$password" "$keychain"
+          security set-keychain-settings -lut 10800 "$keychain"
+          security unlock-keychain -p "$password" "$keychain"
+          security import "$RUNNER_TEMP/project-signing.p12" -k "$keychain" -P "$SIGNING_P12_PASSWORD" -T /usr/bin/codesign
+          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$password" "$keychain" >/dev/null
+          security list-keychains -d user -s "$keychain" "$HOME/Library/Keychains/login.keychain-db"
+      - name: Build, sign, audit and package
+        run: ./compat/build-macos15.sh
+      - name: Verify Debug compilation
+        run: |
+          set -o pipefail
+          xcodebuild -project Tinycast.xcodeproj -scheme Tinycast -configuration Debug \
+            -derivedDataPath "$RUNNER_TEMP/DebugData" ARCHS=arm64 ONLY_ACTIVE_ARCH=NO \
+            CODE_SIGNING_ALLOWED=NO build 2>&1 | tee diagnostics/debug-build.log
+      - name: Run upstream harnesses and lint
+        if: success()
+        shell: bash
+        run: |
+          set -o pipefail
+          ./Scripts/run-tests.sh 2>&1 | tee diagnostics/tests.log
+          ./Scripts/lint.sh 2>&1 | tee diagnostics/lint.log
+      - name: Upload test application ZIP
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: SequoiaCast-Test-0.12.1-macos15-arm64
+          path: dist/
+          if-no-files-found: error
+          retention-days: 14
+      - name: Upload diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: SequoiaCast-diagnostics-${{ github.run_number }}
+          path: diagnostics/
+          if-no-files-found: warn
+          retention-days: 14
+      - name: Delete temporary signing keychain
+        if: always()
+        run: |
+          security delete-keychain "$RUNNER_TEMP/sequoiacast-signing.keychain-db" || true
+          rm -f "$RUNNER_TEMP/project-signing.p12"

@@ -35,9 +35,9 @@ final class DictationWorker: Sendable {
 
     private static var executableName: String {
         #if DEBUG
-            "Tinycast Dev Dictation"
+            "SequoiaCast Dev Dictation"
         #else
-            "Tinycast Dictation"
+            "SequoiaCast Test Dictation"
         #endif
     }
 
