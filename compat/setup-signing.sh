@@ -24,8 +24,8 @@ else
         -name "$account" -out "$work/identity.p12" \
         -passin env:SEQUOIACAST_P12_PASSWORD -passout env:SEQUOIACAST_P12_PASSWORD
     if [ -e "$keychain" ]; then
-        test "$(security find-identity -p codesigning "$keychain" | awk '/identities found/{print $1;exit}')" = 0
-        security delete-keychain "$keychain"
+        echo 'Project keychain exists but its saved PKCS#12 record is missing; restore the record before continuing.' >&2
+        exit 1
     fi
     security create-keychain -p "$password" "$keychain"
     security set-keychain-settings -lut 300 "$keychain"
