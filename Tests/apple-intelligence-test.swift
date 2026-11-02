@@ -164,11 +164,13 @@ struct AppleIntelligenceTests {
         expect(finished, "the on-device stream terminated with .finished")
     }
 
+    @available(macOS 26.0, *)
     private static func text(_ segments: [Transcript.Segment]) -> String {
         segments.compactMap { if case .text(let segment) = $0 { segment.content } else { nil } }
             .joined()
     }
 
+    @available(macOS 26.0, *)
     private static func entryText(_ entry: Transcript.Entry) -> String {
         switch entry {
         case .instructions(let value): return text(value.segments)
