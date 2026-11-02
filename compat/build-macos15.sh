@@ -31,7 +31,11 @@ codesign --force --sign "$identity" --keychain "$keychain" --options runtime --t
 plutil -p "$app/Contents/Info.plist" > diagnostics/app-info.txt
 plutil -p "$app/Contents/Helpers/SequoiaCast Test Dictation.app/Contents/Info.plist" > diagnostics/helper-info.txt
 bash -x ./compat/verify-app.sh "$app" 2>&1 | tee diagnostics/binary-audit.txt
-ditto -c -k --keepParent --sequesterRsrc "$app" 'dist/SequoiaCast-Test-0.12.1-macos15-arm64.zip'
+stage="$RUNNER_TEMP/TestBundle"
+mkdir -p "$stage"
+ditto "$app" "$stage/SequoiaCast Test.app"
+./compat/build-runtime-checks.sh "$stage/Validation"
+ditto -c -k --sequesterRsrc "$stage" 'dist/SequoiaCast-Test-0.12.1-macos15-arm64.zip'
 mkdir -p "$RUNNER_TEMP/roundtrip"
 ditto -x -k 'dist/SequoiaCast-Test-0.12.1-macos15-arm64.zip' "$RUNNER_TEMP/roundtrip"
 ./compat/verify-app.sh "$RUNNER_TEMP/roundtrip/SequoiaCast Test.app" > diagnostics/zip-audit.txt

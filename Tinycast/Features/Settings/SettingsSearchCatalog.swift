@@ -66,6 +66,9 @@ enum SettingsSearchCatalog {
             entries
             .enumerated()
             .compactMap { item -> (entry: SettingsSearchEntry, score: Int, rank: Int)? in
+                if #unavailable(macOS 26.0), item.element.anchor == .quickActionsTranslate {
+                    return nil
+                }
                 guard let score = score(query, item.element) else { return nil }
                 return (item.element, score, item.offset)
             }

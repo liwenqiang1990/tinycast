@@ -60,3 +60,5 @@ The first cloud compile (Xcode 26.6 / macOS SDK 26.5) identified macOS 26-only N
 Local file-search harness passed outside the Codex sandbox; its initial UTType failures inside the sandbox were environmental. Local SwiftLint requires TOOLCHAIN_DIR=/Library/Developer/CommandLineTools and --no-cache in this restricted session.
 
 Local CLT checks so far: Quick Actions, hotkey model, file search model and JavaScript module fixtures pass. The full Quicklinks harness cannot compile under local Swift 6.1.2 because its shipped source uses isolated deinit; it is assigned to the cloud toolchain rather than rewritten for an older compiler.
+
+The test ZIP also includes a Validation folder of seven cloud-compiled, project-signed macOS 15 harnesses. `Validation/run.sh` runs them locally using fresh temporary databases and private pasteboards, writing only diagnostic logs under Validation/Results. They cover clipboard storage/read-write, snippets, Quicklinks, file indexing, hotkey logic and Notes undo/redo, without reading the existing Tinycast store. Global shortcuts and permission-dependent insertion still require the GUI checks.
