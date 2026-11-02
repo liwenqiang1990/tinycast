@@ -13,10 +13,19 @@ Release/Debug, all 104 cloud harnesses, and the final macOS 15.8.2 runtime check
 
 ## Compatibility behavior
 
-Glass is available only within macOS 26 availability branches. Sequoia uses NSVisualEffectView and SwiftUI ultra-thin material.
-Foundation Models types are confined to available functions; on-device AI is absent from provider controls and rejected on macOS 15. External HTTP and installed-tool providers are retained, off by default, with separate Keychain services.
-Direct `TranslationSession(installedSource:target:)` requires macOS 26. On macOS 15 the Translate command, shortcut controls, action row and language picker are omitted and execution is refused. macOS 15's UI-owned translationTask session would need a different panel lifecycle; it is not substituted silently with a paid external model.
-Dictation uses Core ML helpers rather than the new SpeechAnalyzer API; model inference remains unverified until tested.
+The unavailable features below are gated by OS version, not deleted from the macOS 26 code paths.
+
+| Feature | Behavior on macOS 15 |
+| --- | --- |
+| Liquid Glass | Replaced with AppKit `NSVisualEffectView` and SwiftUI ultra-thin material with borders. Native macOS 26 glass rendering and interactive glass effects are unavailable. |
+| Foundation Models on-device AI | Disabled: the on-device provider is hidden from the provider list, its model route is disabled, and direct requests fail with a macOS 26 requirement. FoundationModels is weak-linked and its types/calls are confined to available functions. This does not disable system-wide Apple Intelligence features in other apps. |
+| Built-in Translate | Disabled: launcher entry, hotkey action/controls, Quick Actions row, target-language controls and translation settings-search entries are hidden or excluded. Execution is guarded. The upstream direct `TranslationSession(installedSource:target:)` API requires macOS 26; a macOS 15 UI-owned `translationTask` session would require a different panel lifecycle. No external translation service is substituted automatically. |
+| External AI and installed AI tools | Retained with isolated Keychain services. Grammar correction, rewriting, summarization and custom AI actions remain available when a compatible provider is configured; they cannot fall back to the disabled local model on macOS 15. Real third-party requests/account login remain unverified. |
+| Launcher, hotkeys, clipboard, snippets, quicklinks, file search and extension engine | Retained. Clipboard recording defaults off in this parallel test channel and can be enabled explicitly. A representative local React extension was tested; not every third-party extension was verified. |
+| MCP OAuth, notifications and subprocess working directories | Retained through `NWListener`/`NWConnection`, classic notification observers and the macOS 15 `addchdir_np` spawn path. These API backports preserve features rather than removing them. |
+| Dictation | Core ML helper retained; it does not use the new SpeechAnalyzer API. Helper launch was tested, but model download, microphone capture and inference remain unverified. |
+
+Automatic updates are disabled by the isolated application identity to prevent replacement by the upstream macOS 26 package. This is a coexistence safeguard, not an OS API limitation. The published package is arm64-only; Intel is not included. Builds use a fixed self-signed certificate and are not Apple Developer ID notarized. See [the validation record](VALIDATION.md) for the distinction between cloud compilation, local executable checks and interactive testing.
 
 ## Isolation
 
