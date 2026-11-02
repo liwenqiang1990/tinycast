@@ -79,7 +79,7 @@ Validate launch, Settings, global hotkey, clipboard read/write, snippet expansio
 
 ## Uninstall
 
-Quit SequoiaCast and disable its own Launch at Login if enabled. Remove only SequoiaCast Test.app. Optionally remove the exact test-only data/cache/preferences/config paths listed above. Leave the existing Tinycast.app and all com.tinycast.* paths untouched. No TCC reset is needed. Keep the signing identity for future rebuilds; deleting it changes future permission identity.
+Quit SequoiaCast and disable its own Launch at Login if enabled. Remove only SequoiaCast.app. Optionally remove the exact test-only data/cache/preferences/config paths listed above. Leave the existing Tinycast.app and all com.tinycast.* paths untouched. No TCC reset is needed. Keep the signing identity for future rebuilds; deleting it changes future permission identity.
 
 ## Additional API audit
 

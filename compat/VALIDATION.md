@@ -78,3 +78,17 @@ Compatibility commits use a generic contributor name and GitHub noreply address.
 
 Historical d28b412 patch was checked against unmodified v0.12.1 files: its Theme/PopoverMenu/shortcut/extensions hunks do not apply. It was never blindly applied.
 Initial local file-search UTType assertions failed only inside the Codex sandbox; the same harness passed on the real host outside the sandbox. Local CLT cannot compile isolated deinit/new SDK declarations; its production compiler refuses the experimental flag. Those were compiled in the cloud and executed locally instead.
+
+## Renamed release — v0.12.1-sequoia.2
+
+The new release application is `SequoiaCast.app`, with `SequoiaCast Dictation.app` embedded. Build 9 retains the original `org.sequoiacast.test` main/helper identities, data roots, URL scheme and byte-identical fixed certificate. Both old and new main apps satisfy the old designated signing requirement. The internal identity and certificate names intentionally retain their original values to preserve continuity.
+
+- Source/tag target: `0853a4508884e19bc95df2a8a6abf7edd672d178`.
+- Successful Release/Debug, 104 harnesses and lint: https://github.com/liwenqiang1990/tinycast/actions/runs/41452691705
+- Application and separate validation ZIP artifact: https://github.com/liwenqiang1990/tinycast/actions/runs/41452691705/artifacts/13145877598
+- Diagnostics: https://github.com/liwenqiang1990/tinycast/actions/runs/41452691705/artifacts/13146283053
+- Application ZIP SHA256: `c48a9e50f6c98524ddfdc04a3c3ef70a65668f9a2f8232df763a75b7744f304b`.
+- On macOS 15.8.2: nested signature/architecture/minOS/resource audits, seven isolated runtime harnesses, OCR, thumbnail, file-index helper and renamed dictation-helper EOF launch passed. No dictation inference claim.
+- Full interactive GUI checks and permission retention after the initial application name/path change were not repeated; earlier build 7 interactive evidence above remains separately identified.
+
+[Release](https://github.com/liwenqiang1990/tinycast/releases/tag/v0.12.1-sequoia.2) and [Homebrew tap](https://github.com/liwenqiang1990/homebrew-sequoiacast) use the same application ZIP. The cask pins its hash and requires arm64/macOS 15+. It uses brew-managed updates because in-app updating remains disabled. Upgrade instructions preserve user data; no automated permission reset, quarantine removal, app termination or data purge is configured.
