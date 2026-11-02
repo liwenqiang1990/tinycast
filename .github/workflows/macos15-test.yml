@@ -1,5 +1,5 @@
-name: macOS 15 isolated test
-run-name: SequoiaCast 0.12.1 test · ${{ github.run_number }}
+name: macOS 15 build
+run-name: SequoiaCast 0.12.1 build · ${{ github.run_number }}
 on:
   workflow_dispatch:
 permissions:
@@ -47,11 +47,11 @@ jobs:
           security list-keychains -d user -s "$keychain" "$HOME/Library/Keychains/login.keychain-db"
       - name: Build, sign, audit and package
         run: ./compat/build-macos15.sh
-      - name: Upload test application ZIP
+      - name: Upload application and validation ZIPs
         if: success()
         uses: actions/upload-artifact@v7
         with:
-          name: SequoiaCast-Test-0.12.1-macos15-arm64
+          name: SequoiaCast-0.12.1-macos15-arm64
           path: dist/
           if-no-files-found: error
           retention-days: 14

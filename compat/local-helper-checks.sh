@@ -20,6 +20,6 @@ EOF
 )"
 "$app/Contents/Helpers/FileIndexHelper" "$output/index.bin" "$request" > "$output/index-progress.txt"
 test -s "$output/index.bin"
-"$app/Contents/Helpers/SequoiaCast Test Dictation.app/Contents/MacOS/SequoiaCast Test Dictation" < /dev/null
+"$app/Contents/Helpers/SequoiaCast Dictation.app/Contents/MacOS/SequoiaCast Dictation" < /dev/null
 printf 'All three embedded helpers launch on %s; OCR, thumbnail generation and file crawl passed.\n' "$(sw_vers -productVersion)"
 printf 'Dictation inference needs model weights and microphone testing; EOF launch only was checked.\n'

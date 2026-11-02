@@ -37,7 +37,7 @@ final class DictationWorker: Sendable {
         #if DEBUG
             "SequoiaCast Dev Dictation"
         #else
-            "SequoiaCast Test Dictation"
+            "SequoiaCast Dictation"
         #endif
     }
 

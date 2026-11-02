@@ -4,15 +4,15 @@ app="${1:?usage: verify-app.sh path-to-app}"
 plist="$app/Contents/Info.plist"
 read_plist() { /usr/libexec/PlistBuddy -c "Print :$2" "$1"; }
 [ "$(read_plist "$plist" CFBundleIdentifier)" = org.sequoiacast.test ]
-[ "$(read_plist "$plist" CFBundleExecutable)" = 'SequoiaCast Test' ]
+[ "$(read_plist "$plist" CFBundleExecutable)" = SequoiaCast ]
 [ "$(read_plist "$plist" LSMinimumSystemVersion)" = 15.0 ]
 [ "$(read_plist "$plist" CFBundleURLTypes:0:CFBundleURLSchemes:0)" = sequoiacast-test ]
-helper="$app/Contents/Helpers/SequoiaCast Test Dictation.app"
+helper="$app/Contents/Helpers/SequoiaCast Dictation.app"
 [ "$(read_plist "$helper/Contents/Info.plist" CFBundleIdentifier)" = org.sequoiacast.test.dictation ]
 [ "$(read_plist "$helper/Contents/Info.plist" LSMinimumSystemVersion)" = 15.0 ]
 [ -x "$app/Contents/Helpers/ClipboardTextHelper" ]
 [ -x "$app/Contents/Helpers/FileIndexHelper" ]
-[ -x "$helper/Contents/MacOS/SequoiaCast Test Dictation" ]
+[ -x "$helper/Contents/MacOS/SequoiaCast Dictation" ]
 count=0
 cert_dir="$(mktemp -d)"
 trap 'rm -rf "$cert_dir"' EXIT

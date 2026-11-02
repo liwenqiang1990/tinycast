@@ -23,7 +23,7 @@ settings:
       TINYCAST_BUNDLE_IDENTIFIER: org.sequoiacast.test.dev
       DICTATION_EXECUTABLE_NAME: SequoiaCast Dev Dictation
     Release:
-      DICTATION_EXECUTABLE_NAME: SequoiaCast Test Dictation
+      DICTATION_EXECUTABLE_NAME: SequoiaCast Dictation
       # Release-only: library validation refuses Debug's `.debug.dylib`, whose team never matches.
       ENABLE_HARDENED_RUNTIME: YES
       # Strip the shipped binary (dSYM is still generated first) and drop unused code.
@@ -80,7 +80,7 @@ targets:
           subpath: Contents/Helpers
     settings:
       base:
-        PRODUCT_NAME: SequoiaCast Test
+        PRODUCT_NAME: SequoiaCast
         PRODUCT_BUNDLE_IDENTIFIER: "$(TINYCAST_BUNDLE_IDENTIFIER)"
         INFOPLIST_FILE: Tinycast/Info.plist
         CODE_SIGN_ENTITLEMENTS: Tinycast/Tinycast.entitlements
