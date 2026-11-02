@@ -1,6 +1,6 @@
 # Validation record — 2026-11-02
 
-Status: cloud build/checks passed; the final app was downloaded and run on the user's macOS 15.8.2.
+Status: the replacement cloud build/checks passed. Build 8 was downloaded and its package and seven executable harnesses passed on macOS 15.8.2. Interactive application checks below were performed on build 7, whose application/project source is unchanged.
 
 ## Reproducible source and delivery
 
@@ -8,18 +8,18 @@ Status: cloud build/checks passed; the final app was downloaded and run on the u
 - Exact baseline: `ead1f770401b34f69065e279704a119d04609986`.
 - Fork: https://github.com/liwenqiang1990/tinycast
 - Branch/default branch: `compat/v0.12.1-macos15-isolated`.
-- Application source commit after privacy cleanup: `977fa55808582a9c97ef145e0c267019425824a2`.
-- The linked workflow predates the email-only commit-history cleanup. Application/project source trees are identical before and after cleanup; later commits only add local validation scripts/reporting.
-- Successful full workflow: https://github.com/liwenqiang1990/tinycast/actions/runs/41386041871
-- Test ZIP artifact: https://github.com/liwenqiang1990/tinycast/actions/runs/41386041871/artifacts/13116516554
-- Diagnostics: https://github.com/liwenqiang1990/tinycast/actions/runs/41386041871/artifacts/13116348701
-- ZIP SHA256: `91871de6c918f5df3ab8bdd4540e861d26fcf56d2e9ccb4b567bbab6f5f40d54`.
-- Tested application: `SequoiaCast Test.app`, version 0.12.1, build 7.
+- Current cloud build source commit: `b63e2ba0be95a7de21031abcbc7d2133ca85c994`.
+- This run uses the sanitized commit history. Later documentation/ignore-rule changes do not affect application or build source.
+- Successful full workflow: https://github.com/liwenqiang1990/tinycast/actions/runs/41438965770
+- Test ZIP artifact: https://github.com/liwenqiang1990/tinycast/actions/runs/41438965770/artifacts/13139570881
+- Diagnostics: https://github.com/liwenqiang1990/tinycast/actions/runs/41438965770/artifacts/13140875837
+- ZIP SHA256: `56fb7744825afeb4ac046c3528477443c7ea9057ac22aebe4b8ce445ba69a5c9`.
+- Tested application: `SequoiaCast Test.app`, version 0.12.1, build 8.
 
 ## Cloud evidence
 
 Standard public-repository `macos-26` runner; Xcode 26.6 (17F113), macOS SDK 26.5, Swift 6.3.3.
-Both Release and Debug compiled. **All 104 upstream harnesses passed** in 261 seconds; lint reported `lint-clean` (existing warnings remain). Settings-search/localization checks and generated-project consistency passed.
+Both Release and Debug compiled. **All 104 upstream harnesses passed** in the replacement run; lint reported `lint-clean` (existing warnings remain). Settings-search/localization checks and generated-project consistency passed.
 
 The main app and ClipboardTextHelper, FileIndexHelper, SequoiaCast Test Dictation were all inspected:
 
@@ -37,7 +37,7 @@ Host: Apple silicon, macOS 15.8.2 (24H225), CLT Swift 6.1.2. No full Xcode was i
 
 | Item | Actual result |
 | --- | --- |
-| Final app launch/relaunch | Build 7 launches and relaunches; no SequoiaCast crash report observed |
+| Final app launch/relaunch | Build 7 was tested interactively; build 8 was downloaded and its executable runtime harnesses and package audited |
 | Settings and fallback surfaces | General, Permissions, File Search, AI/providers, Quick Actions, Snippets, Quicklinks and editor panels opened |
 | Global shortcut | Physical keyboard invocation from another app opened the launcher |
 | Clipboard | Final target-15 binaries: clipboard-test 230/230, pasteboard-test 82/82, on private boards and temporary databases |
@@ -52,7 +52,7 @@ Host: Apple silicon, macOS 15.8.2 (24H225), CLT Swift 6.1.2. No full Xcode was i
 | API gating | On-device AI explains macOS 26 requirement and is absent from providers; external providers remain configurable. Translate row/language controls absent in Quick Actions |
 | Coexistence | Original and independent test app ran simultaneously |
 
-All seven final target-15 runtime harnesses passed locally. Detailed host validation logs are retained privately; cloud diagnostics are linked above.
+All seven target-15 runtime harnesses also passed locally from the replacement build 8 package. Detailed host validation logs are retained privately; cloud diagnostics are linked above.
 
 ## Explicit limits
 
@@ -68,13 +68,13 @@ The test application and dictation helper use `org.sequoiacast.test` and `org.se
 
 ## Resolved build/test diagnostics
 
-1. Run 41382606855: actual macOS 26 availability errors in NetworkListener/NetworkConnection, typed notifications and standardized POSIX addchdir. All three helper targets compiled. The APIs were backported individually.
-2. Run 41383174649: Release compile/sign commands succeeded; audit script failed on incorrect codesign certificate-extraction argument syntax. Locally reproduced and fixed.
-3. Run 41384198420: cancelled after discovering the obsolete audit syntax, avoiding an unnecessary full compile.
-4. Run 41384331401: Release+Debug, four binary audits and ZIP round trip passed; 102/104 tests passed. Fixed test preparation based on an arbitrary 150ms delay and a light-appearance pixel test that only counted bright ink.
-5. Run 41385109055: cancelled while pending to upload the already audited ZIP earlier for parallel local testing.
-6. Run 41385350421: audited app and seven target-15 harnesses packaged/uploaded; its old full-suite assertions failed. This was the first locally tested ZIP.
-7. Run 41386041871: all build, signing, packaging, Debug, 104 tests and lint steps passed. This is the delivered app.
+Earlier build attempts exposed API availability, certificate extraction syntax and two upstream harness timing/appearance assumptions. Those issues were corrected before delivery. Superseded Actions runs were removed after the replacement run and download were verified; their detailed evidence is retained privately.
+
+The replacement run passed Release, Debug, nested binary audits, packaging round trip, all 104 harnesses and lint. Application/project/build-script content was preserved through the privacy history rewrite.
+
+## Public-data hygiene
+
+Compatibility commits use a generic contributor name and GitHub noreply address. Public reports omit workstation paths and personal configuration. Private signing material, exported settings/history and local diagnostics are excluded by ignore rules. Older GitHub objects/cached views may remain addressable by superseded SHA; their server-side removal requires GitHub Support assessment.
 
 Historical d28b412 patch was checked against unmodified v0.12.1 files: its Theme/PopoverMenu/shortcut/extensions hunks do not apply. It was never blindly applied.
 Initial local file-search UTType assertions failed only inside the Codex sandbox; the same harness passed on the real host outside the sandbox. Local CLT cannot compile isolated deinit/new SDK declarations; its production compiler refuses the experimental flag. Those were compiled in the cloud and executed locally instead.
