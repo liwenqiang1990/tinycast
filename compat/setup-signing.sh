@@ -7,9 +7,9 @@ service='org.sequoiacast.test.signing'
 account='SequoiaCast Test Signing'
 work="$(mktemp -d)"
 trap 'rm -rf "$work"' EXIT
-if security find-generic-password -s "$service.p12" -a "$account" >/dev/null 2>&1; then
-    security find-generic-password -s "$service.p12" -a "$account" -w > "$work/identity.base64"
-    p12_password="$(security find-generic-password -s "$service.password" -a "$account" -w)"
+if security find-generic-password -s "$service.p12" -a "$account" "$HOME/Library/Keychains/login.keychain-db" >/dev/null 2>&1; then
+    security find-generic-password -s "$service.p12" -a "$account" -w "$HOME/Library/Keychains/login.keychain-db" > "$work/identity.base64"
+    p12_password="$(security find-generic-password -s "$service.password" -a "$account" -w "$HOME/Library/Keychains/login.keychain-db")"
 else
     password="$(openssl rand -base64 32)"
     p12_password="$(openssl rand -base64 32)"
