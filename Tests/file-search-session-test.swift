@@ -159,8 +159,10 @@ struct FileSearchSessionTests {
     static func blankScreenOpensOnKeptRecents() async {
         let probe = FileSearchProbe()
         let session = makeSession(probe: probe)
+        session.search("")
+        await waitUntil { session.state == .ready }
+        session.cancel()
         session.refresh()
-        try? await Task.sleep(for: .milliseconds(150))
         session.search("")
         expect(
             session.state == .ready && !session.results.isEmpty,
