@@ -47,9 +47,11 @@ Quit the running app before replacing it. For future manual upgrades, replace `S
 
 When moving from `SequoiaCast Test.app`, quit it, install `SequoiaCast.app` once, and keep only one runnable copy of this channel. Remove the old application bundle after confirming the new one opens; leave its `org.sequoiacast.test` data intact. The original Tinycast application and `com.tinycast.*` data remain separate.
 
-Homebrew packages are provided by the dedicated `liwenqiang1990/sequoiacast` tap. After its cask is published:
+Homebrew packages are provided by the dedicated `liwenqiang1990/sequoiacast` tap. Install with:
 
 ```sh
+brew tap liwenqiang1990/sequoiacast
+brew trust --cask liwenqiang1990/sequoiacast/sequoiacast
 brew install --cask liwenqiang1990/sequoiacast/sequoiacast
 brew update
 brew upgrade --cask liwenqiang1990/sequoiacast/sequoiacast
@@ -89,3 +91,5 @@ Local file-search harness passed outside the Codex sandbox; its initial UTType f
 Local CLT checks so far: Quick Actions, hotkey model, file search model and JavaScript module fixtures pass. The full Quicklinks harness cannot compile under local Swift 6.1.2 because its shipped source uses isolated deinit; it is assigned to the cloud toolchain rather than rewritten for an older compiler.
 
 The Actions artifact also includes a separate validation ZIP with seven cloud-compiled, project-signed macOS 15 harnesses. The application ZIP contains only the application. `Validation/run.sh` runs them locally using fresh temporary databases and private pasteboards, writing only diagnostic logs under Validation/Results. They cover clipboard storage/read-write, snippets, Quicklinks, file indexing, hotkey logic and Notes undo/redo, without reading the existing Tinycast store. Global shortcuts and permission-dependent insertion still require the GUI checks.
+
+Homebrew 7 validation: the cask loaded successfully, passed style checks, fetched and verified the released ZIP, installed into an isolated validation directory, and passed the installed-bundle signature/architecture/minimum-OS audit. The validation installation was removed without a data purge. This did not replace or launch the user's existing app. On older Homebrew versions without `brew trust`, omit that command; if a future tap update prompts for renewed trust, review the cask before trusting it again.
