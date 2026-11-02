@@ -105,6 +105,7 @@ targets:
     settings:
       base:
         # Pinned, or release.yml's PRODUCT_NAME renames the binary `ClipboardTextWorker` looks for.
+        PRODUCT_BUNDLE_IDENTIFIER: "$(TINYCAST_BUNDLE_IDENTIFIER).clipboard-text"
         EXECUTABLE_NAME: ClipboardTextHelper
         PRODUCT_MODULE_NAME: ClipboardTextHelper
         SKIP_INSTALL: YES
@@ -123,6 +124,7 @@ targets:
     settings:
       base:
         # Pinned like ClipboardTextHelper's: release.yml's PRODUCT_NAME would otherwise rename it.
+        PRODUCT_BUNDLE_IDENTIFIER: "$(TINYCAST_BUNDLE_IDENTIFIER).file-index"
         EXECUTABLE_NAME: FileIndexHelper
         PRODUCT_MODULE_NAME: FileIndexHelper
         SKIP_INSTALL: YES

@@ -4983,7 +4983,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.tinycast.ClipboardTextHelper;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(TINYCAST_BUNDLE_IDENTIFIER).clipboard-text";
 				PRODUCT_MODULE_NAME = ClipboardTextHelper;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -4999,7 +4999,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.tinycast.FileIndexHelper;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(TINYCAST_BUNDLE_IDENTIFIER).file-index";
 				PRODUCT_MODULE_NAME = FileIndexHelper;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -5016,7 +5016,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.tinycast.FileIndexHelper;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(TINYCAST_BUNDLE_IDENTIFIER).file-index";
 				PRODUCT_MODULE_NAME = FileIndexHelper;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -5102,7 +5102,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.tinycast.ClipboardTextHelper;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(TINYCAST_BUNDLE_IDENTIFIER).clipboard-text";
 				PRODUCT_MODULE_NAME = ClipboardTextHelper;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;

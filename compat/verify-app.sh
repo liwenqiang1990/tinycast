@@ -18,6 +18,7 @@ cert_dir="$(mktemp -d)"
 trap 'rm -rf "$cert_dir"' EXIT
 codesign -d --extract-certificates "$cert_dir/main" "$app" 2>/dev/null
 main_cert="$(shasum -a 256 "$cert_dir/main0" | awk '{print $1}')"
+[ "$main_cert" = "$(cat "$(dirname "$0")/signing-certificate.sha256")" ]
 while IFS= read -r -d '' binary; do
     file -b "$binary" | grep -q 'Mach-O' || continue
     count=$((count + 1))

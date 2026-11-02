@@ -668,10 +668,9 @@ final class AppSettings {
     }
 
     init() {
-        // The only feature switch that defaults on, so absence has to outrank a stored `false`.
-        clipboardEnabled =
-            defaults.object(forKey: Key.clipboardEnabled.rawValue) == nil
-            || defaults.bool(forKey: Key.clipboardEnabled.rawValue)
+        // Parallel test builds opt in before recording the everyday clipboard.
+        clipboardEnabled = defaults.object(forKey: Key.clipboardEnabled.rawValue) as? Bool
+            ?? !(Bundle.main.bundleIdentifier?.hasPrefix("org.sequoiacast.test") ?? false)
         // `integer(forKey:)` returns 0 when unset, which no case matches.
         clipboardTextSearchEnabled = defaults.bool(forKey: Key.clipboardTextSearchEnabled.rawValue)
         clipboardRetention =

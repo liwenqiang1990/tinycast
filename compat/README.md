@@ -28,7 +28,7 @@ Optional settings mirror: `~/.config/org.sequoiacast.test/settings.json`.
 Keychain services begin with `org.sequoiacast.test.`.
 Only the `sequoiacast-test` URL scheme is registered, to avoid taking existing Tinycast/Raycast handlers.
 The custom Bundle ID maps to the upstream development channel: update checks and installation are disabled.
-Start without hotkeys, permissions or enabled AI. Choose a shortcut that the installed app does not use. Hyper Key remaps physical keyboards globally: leave it off for coexistence tests.
+Start without hotkeys, permissions, enabled AI or clipboard recording. Enable clipboard recording explicitly for this test channel. Choose a shortcut that the installed app does not use. Hyper Key remaps physical keyboards globally: leave it off for coexistence tests.
 
 ## Signing
 
@@ -58,3 +58,5 @@ Quit SequoiaCast Test and disable its own Launch at Login if enabled. Remove onl
 
 The first cloud compile (Xcode 26.6 / macOS SDK 26.5) identified macOS 26-only NetworkListener/NetworkConnection, typed NotificationCenter tokens/messages, and POSIX standardized addchdir. The compatibility branch uses NWListener/NWConnection with loopback-only binding, the existing callback validation, bounded requests, timeout/cancel cleanup; classic notifications; and addchdir_np on Sequoia. This preserves MCP OAuth, locale updates, undo/redo and subprocess working directories without raising the deployment floor.
 Local file-search harness passed outside the Codex sandbox; its initial UTType failures inside the sandbox were environmental. Local SwiftLint requires TOOLCHAIN_DIR=/Library/Developer/CommandLineTools and --no-cache in this restricted session.
+
+Local CLT checks so far: Quick Actions, hotkey model, file search model and JavaScript module fixtures pass. The full Quicklinks harness cannot compile under local Swift 6.1.2 because its shipped source uses isolated deinit; it is assigned to the cloud toolchain rather than rewritten for an older compiler.
