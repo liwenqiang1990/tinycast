@@ -12,7 +12,7 @@ jobs:
     runs-on: macos-26
     timeout-minutes: 50
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           persist-credentials: false
       - name: Select Xcode 26
@@ -62,7 +62,7 @@ jobs:
           ./Scripts/lint.sh 2>&1 | tee diagnostics/lint.log
       - name: Upload test application ZIP
         if: success()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: SequoiaCast-Test-0.12.1-macos15-arm64
           path: dist/
@@ -70,7 +70,7 @@ jobs:
           retention-days: 14
       - name: Upload diagnostics
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: SequoiaCast-diagnostics-${{ github.run_number }}
           path: diagnostics/

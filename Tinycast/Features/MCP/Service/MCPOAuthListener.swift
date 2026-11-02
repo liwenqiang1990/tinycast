@@ -118,7 +118,8 @@ final class MCPOAuthListener {
 
     private func read(_ id: UUID, bytes: Data, state: String, issuer: String, requiresIssuer: Bool) {
         guard let connection = connections[id], bytes.count < 8192 else { close(id); return }
-        connection.receive(minimumIncompleteLength: 1, maximumLength: 8192 - bytes.count) { [weak self] content, _, complete, error in
+        let remaining = 8192 - bytes.count
+        connection.receive(minimumIncompleteLength: 1, maximumLength: remaining) { [weak self] content, _, complete, error in
             Task { @MainActor [weak self] in
                 guard let self, self.connections[id] != nil else { return }
                 var next = bytes

@@ -28,7 +28,9 @@ codesign --force --sign "$identity" --keychain "$keychain" --options runtime --t
     "$app/Contents/Helpers/SequoiaCast Test Dictation.app"
 codesign --force --sign "$identity" --keychain "$keychain" --options runtime --timestamp=none \
     --entitlements Tinycast/Tinycast.entitlements "$app"
-./compat/verify-app.sh "$app" | tee diagnostics/binary-audit.txt
+plutil -p "$app/Contents/Info.plist" > diagnostics/app-info.txt
+plutil -p "$app/Contents/Helpers/SequoiaCast Test Dictation.app/Contents/Info.plist" > diagnostics/helper-info.txt
+bash -x ./compat/verify-app.sh "$app" 2>&1 | tee diagnostics/binary-audit.txt
 ditto -c -k --keepParent --sequesterRsrc "$app" 'dist/SequoiaCast-Test-0.12.1-macos15-arm64.zip'
 mkdir -p "$RUNNER_TEMP/roundtrip"
 ditto -x -k 'dist/SequoiaCast-Test-0.12.1-macos15-arm64.zip' "$RUNNER_TEMP/roundtrip"
