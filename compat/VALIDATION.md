@@ -94,3 +94,20 @@ The new release application is `SequoiaCast.app`, with `SequoiaCast Dictation.ap
 [Release](https://github.com/liwenqiang1990/tinycast/releases/tag/v0.12.1-sequoia.2) and [Homebrew tap](https://github.com/liwenqiang1990/homebrew-sequoiacast) use the same application ZIP. The cask pins its hash and requires arm64/macOS 15+. It uses brew-managed updates because in-app updating remains disabled. Upgrade instructions preserve user data; no automated permission reset, quarantine removal, app termination or data purge is configured.
 
 Homebrew 7.0.11: cask style/load, real release download/SHA256 check, isolated installation, installed-app audit and removal of the validation installation completed. A local pre-existing core mirror returned 404 during the cleanup command; no global mirror configuration was changed. The validation app and Caskroom record were confirmed absent afterward. No user store was purged. The full GUI upgrade/permission-persistence sweep remains unverified.
+
+## Localization performance follow-up (pending application validation)
+
+On macOS 15.8.2, an interactive typing sample showed repeated localization-table
+loading and XML property-list parsing on the main thread during view updates.
+A standalone lookup benchmark using the shipped English and Simplified Chinese
+`Localizable.strings` and `Localizable.stringsdict` reproduced the resource cost:
+1,000 Chinese label lookups took approximately 1.55 seconds with the shipped XML
+resources and 0.04 seconds with equivalent binary property lists. This is a
+resource microbenchmark, not an application frame-rate measurement.
+
+The project now requests binary strings output for both configurations. The
+packaging audit rejects nonbinary `.strings` or `.stringsdict` resources. Text,
+plural rules, application identity, signing and data paths are unchanged.
+The new build requires cloud validation and an interactive typing comparison
+before this can be reported as a verified application-level fix. Raw local
+process samples are not published.

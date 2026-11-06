@@ -17,6 +17,7 @@ settings:
     # A stable self-signed identity keeps the Accessibility grant across rebuilds. docs/signing.md
     CODE_SIGN_IDENTITY: "SequoiaCast Test Signing"
     SWIFT_STRICT_CONCURRENCY: complete
+    STRINGS_FILE_OUTPUT_ENCODING: binary
     TINYCAST_BUNDLE_IDENTIFIER: org.sequoiacast.test
   configs:
     Debug:

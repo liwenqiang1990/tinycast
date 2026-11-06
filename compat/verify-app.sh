@@ -47,6 +47,17 @@ codesign --verify --deep --strict "$app"
 [ -s "$app/Contents/Resources/RaycastRuntime.generated.js" ]
 [ -d "$app/Contents/Resources/EmojiKeywords" ]
 [ -s "$app/Contents/Resources/NOTICE.md" ]
+strings_count=0
+while IFS= read -r -d '' strings; do
+    [ "$(head -c 8 "$strings")" = bplist00 ] || {
+        echo "Localization resource must use binary plist encoding: ${strings#"$app"/}" >&2
+        exit 1
+    }
+    plutil -lint "$strings"
+    strings_count=$((strings_count + 1))
+done < <(find "$app/Contents/Resources" -type f \( -name '*.strings' -o -name '*.stringsdict' \) -print0)
+[ "$strings_count" -ge 18 ]
+echo "Verified $strings_count binary localization resources."
 while IFS= read -r -d '' link; do
     [ -e "$link" ] || { echo "Broken symlink: $link" >&2; exit 1; }
 done < <(find "$app" -type l -print0)

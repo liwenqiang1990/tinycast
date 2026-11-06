@@ -34,7 +34,7 @@ bash -x ./compat/verify-app.sh "$app" 2>&1 | tee diagnostics/binary-audit.txt
 stage="$RUNNER_TEMP/ValidationBundle"
 mkdir -p "$stage"
 ./compat/build-runtime-checks.sh "$stage/Validation"
-archive='dist/SequoiaCast-0.12.1-sequoia.2-macos15-arm64.zip'
+archive='dist/SequoiaCast-0.12.1-sequoia.3-macos15-arm64.zip'
 ditto -c -k --keepParent --sequesterRsrc "$app" "$archive"
 ditto -c -k --keepParent --sequesterRsrc "$stage/Validation" 'dist/SequoiaCast-0.12.1-macos15-validation.zip'
 mkdir -p "$RUNNER_TEMP/roundtrip"
