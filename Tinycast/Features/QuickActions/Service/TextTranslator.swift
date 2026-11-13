@@ -64,6 +64,7 @@ enum TextTranslator {
         throw Failure.notInstalled(language: displayName(of: targetIsInstalled ? source : target))
     }
 
+    @available(macOS 26.0, *)
     private static func translate(
         _ text: String, from source: Locale.Language, to target: Locale.Language
     ) async throws -> String {

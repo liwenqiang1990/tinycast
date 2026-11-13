@@ -30,3 +30,9 @@ and old schema again preserve synthetic messages, foreign keys and integrity.
 This does not claim full application downgrade compatibility. Clipboard schemas
 are byte-identical across the two baselines. The downloaded validation suite now
 also includes OpenCode MCP loopback, AI chat storage/model and update-policy tests.
+
+First cloud compile used Xcode 26.6 / SDK 26.5 / Swift 6.3.3. It required an
+explicit HyperKeyEngine initializer (upstream relies on synthesized behavior),
+a smaller caret-refocus Task expression, and an availability annotation on the
+new private TranslationSession helper. These are narrow compiler/API fixes;
+no launcher focus behavior or HyperKey configuration is intentionally changed.
