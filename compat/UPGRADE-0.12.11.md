@@ -1,7 +1,7 @@
-# v0.12.11 compatibility audit (in progress)
+# v0.12.11 compatibility audit and validation
 
 Baseline: `v0.12.11`, `58168bf7e0b721f7c5fbfc7f4e8a068a48cff446`.
-Branch: `compat/v0.12.11-macos15-isolated`. Existing stable builds are unchanged.
+Branch: `compat/v0.12.11-macos15-isolated`. Release: `v0.12.11-sequoia.1` (build 13).
 
 | Previous change | Upstream evidence / disposition |
 | --- | --- |
@@ -17,12 +17,13 @@ Branch: `compat/v0.12.11-macos15-isolated`. Existing stable builds are unchanged
 Upstream documentation and release workflow now request Xcode 27 on an upstream-specific
 `xcode-27` runner. Our public hosted macos-26 workflow inventories installed Xcodes and
 selects the latest released 26/27 toolchain. Compilation must establish whether the available
-SDK suffices; no successful build is claimed yet.
+SDK suffices. Run 43354834030 has passed Release packaging and Debug compilation
+with Xcode 26.6; all 113 upstream harnesses and lint also passed.
 
 Storage inspection: ClipboardStore's schema is unchanged (new capture generation prevents
 late writes); ChatHistoryStore adds conversation_presets with CREATE TABLE IF NOT EXISTS.
-New chat presets/settings are additive. Synthetic upgrade/downgrade tests and GUI validation
-remain pending; user data has not been read or migrated. The prior validation report describes
+New chat presets/settings are additive. Synthetic upgrade/downgrade tests and initial GUI checks
+passed; private user data was not copied as a fixture. The prior validation report describes
 0.12.1 only until superseded by a verified 0.12.11 report.
 
 Synthetic SQLite schema check passed on macOS 15: the old chat schema, new schema,
@@ -36,3 +37,26 @@ explicit HyperKeyEngine initializer (upstream relies on synthesized behavior),
 a smaller caret-refocus Task expression, and an availability annotation on the
 new private TranslationSession helper. These are narrow compiler/API fixes;
 no launcher focus behavior or HyperKey configuration is intentionally changed.
+
+## Build 13: local evidence
+
+Run: https://github.com/liwenqiang1990/tinycast/actions/runs/43354834030
+
+On Apple silicon / macOS 15.8.2, recursive package/signature/minimum-OS checks
+and all ten shipped runtime harnesses passed. Embedded OCR, thumbnail and file-index
+helpers passed with synthetic fixtures; the dictation helper launched and exited on EOF.
+No microphone/model inference or external AI service claim is made.
+
+The existing optimized 0.12.1 build and this candidate both took approximately
+0.085 seconds for 1,000 Chinese resource lookups. This is a resource benchmark,
+not a frame-rate measurement. All 27 localization resources are binary plists.
+
+The designated signing requirement is unchanged. The previous application bundle
+was backed up, then the candidate replaced it in place without deleting channel data.
+Launch, search input/results, keyboard selection and General/About/Permissions settings
+opened successfully; About identifies version 0.12.11 (13). The user then reported
+that real keyboard input/focus switching fails. Automation can enter text, which does
+not invalidate the physical-keyboard report. The user subsequently confirmed input
+was working again and authorized publication. No code fix was made for this transient
+focus issue; its cause and recurrence remain unknown. Current plugin UI and further
+feature checks remain unverified on this version.

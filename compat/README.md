@@ -1,6 +1,6 @@
 # SequoiaCast — Tinycast 0.12.11 on macOS 15
 
-The v0.12.11 upgrade is being validated. See [the upgrade audit](UPGRADE-0.12.11.md).
+Release `v0.12.11-sequoia.1` ships build 13. See [the upgrade audit and validation](UPGRADE-0.12.11.md), including the transient focus issue and test limits.
 The [previous validation record](VALIDATION.md) describes v0.12.1 and does not establish v0.12.11 compatibility.
 
 - Baseline: upstream tag `v0.12.11`, commit `58168bf7e0b721f7c5fbfc7f4e8a068a48cff446`.
@@ -68,8 +68,8 @@ This is self-signed, not Developer ID notarized; Gatekeeper may require a one-ti
 
 ## Manual builds
 
-Once the compatibility workflow exists on the fork's default branch, select Actions → macOS 15 build → Run workflow → `compat/v0.12.1-macos15-isolated`.
-CLI: `gh workflow run macos15-test.yml --repo liwenqiang1990/tinycast --ref compat/v0.12.1-macos15-isolated`.
+Select Actions → macOS 15 build → Run workflow → `compat/v0.12.11-macos15-isolated`.
+CLI: `gh workflow run macos15-test.yml --repo liwenqiang1990/tinycast --ref compat/v0.12.11-macos15-isolated`.
 Only this workflow is enabled on the compatibility branch; upstream workflow sources are retained with `.disabled` suffixes. No release, tap, mirror, sync, website or messaging action runs.
 The workflow uses the standard `macos-26` runner and contents:read token. ZIP artifacts expire after 14 days; download and retain locally. Logs include toolchain version, compiler output and recursive binary/signature audit.
 Packaging uses ditto, then extraction, byte comparison, signature, architecture, minOS, resource and symlink verification.
@@ -91,6 +91,6 @@ Local file-search harness passed outside the Codex sandbox; its initial UTType f
 
 Local CLT checks so far: Quick Actions, hotkey model, file search model and JavaScript module fixtures pass. The full Quicklinks harness cannot compile under local Swift 6.1.2 because its shipped source uses isolated deinit; it is assigned to the cloud toolchain rather than rewritten for an older compiler.
 
-The Actions artifact also includes a separate validation ZIP with seven cloud-compiled, project-signed macOS 15 harnesses. The application ZIP contains only the application. `Validation/run.sh` runs them locally using fresh temporary databases and private pasteboards, writing only diagnostic logs under Validation/Results. They cover clipboard storage/read-write, snippets, Quicklinks, file indexing, hotkey logic and Notes undo/redo, without reading the existing Tinycast store. Global shortcuts and permission-dependent insertion still require the GUI checks.
+The Actions artifact also includes a separate validation ZIP with ten cloud-compiled, project-signed macOS 15 harnesses. The application ZIP contains only the application. `Validation/run.sh` runs them locally using fresh temporary databases and private pasteboards, writing only diagnostic logs under Validation/Results. They cover clipboard storage/read-write, snippets, Quicklinks, file indexing, hotkey logic, Notes undo/redo, OpenCode MCP, AI chat and update policy, without reading the existing Tinycast store. Global shortcuts and permission-dependent insertion still require the GUI checks.
 
 Homebrew 7 validation: the cask loaded successfully, passed style checks, fetched and verified the released ZIP, installed into an isolated validation directory, and passed the installed-bundle signature/architecture/minimum-OS audit. The validation installation was removed without a data purge. This did not replace or launch the user's existing app. On older Homebrew versions without `brew trust`, omit that command; if a future tap update prompts for renewed trust, review the cask before trusting it again.

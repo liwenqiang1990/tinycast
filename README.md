@@ -1,5 +1,9 @@
 > This compatibility branch builds **SequoiaCast**, based on stable Tinycast v0.12.11, for Apple silicon Macs running macOS 15. **On macOS 15, Liquid Glass is replaced with native blur/material surfaces; Foundation Models on-device AI and the built-in Translate action are disabled.** Their unavailable provider, launcher, shortcut and translation settings entries are hidden. External AI providers, installed AI tools, the extension engine, launcher, hotkeys, clipboard, snippets, quicklinks and file search are retained. AI-based grammar correction, rewriting and summarization require a configured compatible provider. MCP OAuth, notifications and subprocess APIs were backported rather than removing their features. The app uses separate application/helper identities and data directories, disables automatic updates, and makes clipboard recording opt-in. See [compatibility build and validation](compat/README.md) for the detailed feature differences, fixed self-signing identity, manual workflow and actual test limits. Upstream instructions below describe the original macOS 26 channel and do not apply unchanged to this compatibility build.
 
+Compatibility changes and current validation: [v0.12.11 audit](compat/UPGRADE-0.12.11.md).
+
+**Acknowledgment:** OpenAI Codex assisted with the macOS 15 compatibility port, performance review, build automation and validation documentation. This is an independently maintained compatibility build, not an official OpenAI or upstream release.
+
 <h1 align="center">
   <a href="https://tinycast.dev"><img src="docs/images/icon.png" alt="Tinycast app icon" width="128" height="128"></a><br>
   Tinycast
