@@ -1,13 +1,14 @@
-# SequoiaCast — Tinycast 0.12.1 on macOS 15
+# SequoiaCast — Tinycast 0.12.11 on macOS 15
 
-Release/Debug, all 104 cloud harnesses, and the final macOS 15.8.2 runtime checks passed. See [the exact validation record and limits](VALIDATION.md).
+The v0.12.11 upgrade is being validated. See [the upgrade audit](UPGRADE-0.12.11.md).
+The [previous validation record](VALIDATION.md) describes v0.12.1 and does not establish v0.12.11 compatibility.
 
-- Baseline: upstream tag `v0.12.1`, commit `ead1f770401b34f69065e279704a119d04609986`.
-- Branch: `compat/v0.12.1-macos15-isolated`.
+- Baseline: upstream tag `v0.12.11`, commit `58168bf7e0b721f7c5fbfc7f4e8a068a48cff446`.
+- Branch: `compat/v0.12.11-macos15-isolated`.
 - App: `SequoiaCast.app`, ID `org.sequoiacast.test`.
 - Dictation app: `SequoiaCast Dictation.app`, ID `org.sequoiacast.test.dictation`.
 - Native command-line helpers: ClipboardTextHelper and FileIndexHelper, embedded and signed separately.
-- Builds require Xcode 26 / Swift 6.2 or newer within Xcode 26, not the local Swift 6.1.2 CLT. Existing source uses `@concurrent` and `isolated deinit`. No Xcode is installed locally.
+- Upstream now requests Xcode 27. The compatibility workflow selects an available released Xcode 26/27 on a standard hosted runner; the first compile used Xcode 26.6 / Swift 6.3.3. See the audit for compiler adaptations and final results. No full Xcode is installed locally.
 - All targets deploy to macOS 15.0, with arm64-only output. Project is generated from project.yml.
 - Historical d28b412 patch was inspected only; its 0.9-era UI hunks do not cover this tree's newer AI, translation, dictation, file indexing or additional glass surfaces.
 

@@ -412,7 +412,7 @@ struct RootPaletteView: View {
 
     /// Split from `body` for the same reason `keyHandlers` is: one chain cannot carry them all.
     @ViewBuilder
-    private func stateObservers(_ content: some View) -> some View {
+    private func searchObservers(_ content: some View) -> some View {
         emojiObservers(content)
             // Every show bumps focusToken so the search field refocuses.
             .onChange(of: vm.focusToken) {
@@ -487,6 +487,11 @@ struct RootPaletteView: View {
                     Task { await extensions.stop() }
                 }
             }
+    }
+
+    @ViewBuilder
+    private func stateObservers(_ content: some View) -> some View {
+        searchObservers(content)
             // `prepare` may change nothing else, so this still lands the list as freshly opened.
             .onChange(of: vm.resetToken) {
                 if menuOpen { closeMenus() }
@@ -1383,7 +1388,6 @@ struct RootPaletteView: View {
 
     // MARK: - Actions
 
-    /// Every reset lands here, so handlers that fire together agree in whatever order they run.
     private func moveCaretAfterRefocus() {
         Task { @MainActor in
             guard let panel = hostWindow as? PalettePanel else { return }
@@ -1391,6 +1395,7 @@ struct RootPaletteView: View {
         }
     }
 
+    /// Every reset lands here, so handlers that fire together agree in whatever order they run.
     private func land(restoringSelection: Bool = false) {
         let restored = restoringSelection ? vm.restoredSelection : nil
         let landing = restored.map { min($0, max(screen.rows.count - 1, 0)) } ?? screen.landingSelection
