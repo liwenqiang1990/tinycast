@@ -2,8 +2,6 @@
 
 Compatibility changes and current validation: [v0.12.11 audit](compat/UPGRADE-0.12.11.md).
 
-**Acknowledgment:** OpenAI Codex assisted with the macOS 15 compatibility port, performance review, build automation and validation documentation. This is an independently maintained compatibility build, not an official OpenAI or upstream release.
-
 <h1 align="center">
   <a href="https://tinycast.dev"><img src="docs/images/icon.png" alt="Tinycast app icon" width="128" height="128"></a><br>
   Tinycast
@@ -67,3 +65,11 @@ development. Thank you!
 ## License
 
 Tinycast is licensed under the [AGPL-3.0 license](LICENSE).
+
+## Contributors
+
+- **Abue Ammar and upstream contributors** — original Tinycast application.
+- **liwenqiang1990** — SequoiaCast compatibility channel maintainer and macOS 15 testing.
+- **OpenAI Codex** — AI-assisted macOS 15 compatibility port, performance review, build automation and validation documentation.
+
+This independently maintained compatibility build is not an official OpenAI or upstream release.
