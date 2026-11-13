@@ -24,3 +24,9 @@ late writes); ChatHistoryStore adds conversation_presets with CREATE TABLE IF NO
 New chat presets/settings are additive. Synthetic upgrade/downgrade tests and GUI validation
 remain pending; user data has not been read or migrated. The prior validation report describes
 0.12.1 only until superseded by a verified 0.12.11 report.
+
+Synthetic SQLite schema check passed on macOS 15: the old chat schema, new schema,
+and old schema again preserve synthetic messages, foreign keys and integrity.
+This does not claim full application downgrade compatibility. Clipboard schemas
+are byte-identical across the two baselines. The downloaded validation suite now
+also includes OpenCode MCP loopback, AI chat storage/model and update-policy tests.

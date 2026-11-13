@@ -4,7 +4,7 @@ cd "$(dirname "$0")/.."
 export SEQUOIACAST_RUNTIME_DIR="${1:?usage: build-runtime-checks.sh output-directory}"
 mkdir -p "$SEQUOIACAST_RUNTIME_DIR"
 export BASH_ENV="$PWD/compat/runtime-compiler-env.sh"
-for harness in clipboard-test pasteboard-test snippets-test quicklink-test file-index-test hotkey-test notes-editor-test; do
+for harness in clipboard-test pasteboard-test snippets-test quicklink-test file-index-test hotkey-test notes-editor-test opencode-mcp-test ai-chat-test updates-test; do
     ./Scripts/run-tests.sh "$harness" 2>&1 | tee "diagnostics/runtime-$harness.log"
     binary="$SEQUOIACAST_RUNTIME_DIR/$harness"
     codesign --force --sign 'SequoiaCast Test Signing' \

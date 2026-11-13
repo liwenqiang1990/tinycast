@@ -2,7 +2,7 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 mkdir -p Results
-for harness in clipboard-test pasteboard-test snippets-test quicklink-test file-index-test hotkey-test notes-editor-test; do
+for harness in clipboard-test pasteboard-test snippets-test quicklink-test file-index-test hotkey-test notes-editor-test opencode-mcp-test ai-chat-test updates-test; do
     echo "Running $harness on $(sw_vers -productVersion)"
     "./$harness" 2>&1 | tee "Results/$harness.log"
 done
