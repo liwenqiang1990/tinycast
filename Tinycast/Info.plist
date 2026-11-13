@@ -20,6 +20,8 @@
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>TinycastURLScheme</key>
+	<string>$(TINYCAST_URL_SCHEME)</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -27,7 +29,7 @@
 			<string>SequoiaCast URL Scheme</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>sequoiacast-test</string>
+				<string>$(TINYCAST_URL_SCHEME)</string>
 			</array>
 		</dict>
 	</array>
@@ -75,5 +77,7 @@
 	<string>Tinycast uses Bluetooth access only when you run the Toggle Bluetooth action.</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Tinycast</string>
+	<key>TinycastUpdatePublicKey</key>
+	<string>CSzrQKht5GxZW2nVLbWEunvUChqDkeFLP64xSQRWN9E=</string>
 </dict>
 </plist>

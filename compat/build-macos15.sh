@@ -15,7 +15,7 @@ fi
 xcodebuild -project Tinycast.xcodeproj -scheme Tinycast -configuration Release \
     -derivedDataPath "$RUNNER_TEMP/DerivedData" -resultBundlePath "$RUNNER_TEMP/Build.xcresult" \
     ARCHS=arm64 ONLY_ACTIVE_ARCH=NO MACOSX_DEPLOYMENT_TARGET=15.0 \
-    CODE_SIGNING_ALLOWED=NO MARKETING_VERSION=0.12.1 CURRENT_PROJECT_VERSION="$GITHUB_RUN_NUMBER" \
+    CODE_SIGNING_ALLOWED=NO MARKETING_VERSION=0.12.11 CURRENT_PROJECT_VERSION="$GITHUB_RUN_NUMBER" \
     build 2>&1 | tee diagnostics/build.log
 app="$RUNNER_TEMP/DerivedData/Build/Products/Release/SequoiaCast.app"
 identity='SequoiaCast Test Signing'
@@ -34,9 +34,9 @@ bash -x ./compat/verify-app.sh "$app" 2>&1 | tee diagnostics/binary-audit.txt
 stage="$RUNNER_TEMP/ValidationBundle"
 mkdir -p "$stage"
 ./compat/build-runtime-checks.sh "$stage/Validation"
-archive='dist/SequoiaCast-0.12.1-sequoia.3-macos15-arm64.zip'
+archive='dist/SequoiaCast-0.12.11-sequoia.1-macos15-arm64.zip'
 ditto -c -k --keepParent --sequesterRsrc "$app" "$archive"
-ditto -c -k --keepParent --sequesterRsrc "$stage/Validation" 'dist/SequoiaCast-0.12.1-macos15-validation.zip'
+ditto -c -k --keepParent --sequesterRsrc "$stage/Validation" 'dist/SequoiaCast-0.12.11-macos15-validation.zip'
 mkdir -p "$RUNNER_TEMP/roundtrip"
 ditto -x -k "$archive" "$RUNNER_TEMP/roundtrip"
 ./compat/verify-app.sh "$RUNNER_TEMP/roundtrip/SequoiaCast.app" > diagnostics/zip-audit.txt

@@ -91,6 +91,7 @@ struct ExtensionActionsPanel: View {
         }
         .frame(width: panel.width)
         .frostedMenu(in: shape)
+        .clipShape(shape)
     }
 
     @ViewBuilder

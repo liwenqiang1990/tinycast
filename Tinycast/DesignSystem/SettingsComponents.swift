@@ -112,7 +112,7 @@ extension SettingsRow where Icon == EmptyView {
         @ViewBuilder trailing: () -> Trailing
     ) {
         self.init(
-            title: String(localized: title), subtitle: subtitle,
+            title: title.resolved(), subtitle: subtitle,
             subtitleLineLimit: subtitleLineLimit, alignment: alignment, anchor: anchor,
             icon: { EmptyView() }, trailing: trailing)
     }
@@ -289,9 +289,9 @@ private struct SettingsEditorPanelSurface: ViewModifier {
                 .background(Theme.Colors.panelScrim, in: shape)
                 .frostedMenu(in: shape)
         } else {
-            draggable.background {
-                shape.fill(Theme.Colors.panelScrim).frostedMenu(in: shape)
-            }
+            draggable
+                .background(Theme.Colors.panelScrim, in: shape)
+                .background { Color.clear.frostedMenu(in: shape) }
         }
     }
 }

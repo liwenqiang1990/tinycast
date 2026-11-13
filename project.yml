@@ -19,9 +19,11 @@ settings:
     SWIFT_STRICT_CONCURRENCY: complete
     STRINGS_FILE_OUTPUT_ENCODING: binary
     TINYCAST_BUNDLE_IDENTIFIER: org.sequoiacast.test
+    TINYCAST_URL_SCHEME: sequoiacast-test
   configs:
     Debug:
       TINYCAST_BUNDLE_IDENTIFIER: org.sequoiacast.test.dev
+      TINYCAST_URL_SCHEME: sequoiacast-test-dev
       DICTATION_EXECUTABLE_NAME: SequoiaCast Dev Dictation
     Release:
       DICTATION_EXECUTABLE_NAME: SequoiaCast Dictation
@@ -119,6 +121,7 @@ targets:
       - Tinycast/Features/FileSearch/Model/FileSearchIgnoreList.swift
       - Tinycast/Features/FileSearch/Model/FileSearchPolicy.swift
       - Tinycast/Features/FileSearch/Model/FileSearchQuery.swift
+      - Tinycast/Features/FileSearch/Model/FileSearchResult.swift
       - Tinycast/Features/FileSearch/Model/FileSearchScope.swift
       - Tinycast/Features/FileSearch/Service/FileIndexCrawler.swift
       - Tinycast/Features/FileSearch/Service/FileIndexSnapshot.swift

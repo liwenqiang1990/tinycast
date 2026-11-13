@@ -1,5 +1,5 @@
 name: macOS 15 build
-run-name: SequoiaCast 0.12.1 build · ${{ github.run_number }}
+run-name: SequoiaCast 0.12.11 build · ${{ github.run_number }}
 on:
   workflow_dispatch:
 permissions:
@@ -15,11 +15,13 @@ jobs:
       - uses: actions/checkout@v7
         with:
           persist-credentials: false
-      - name: Select Xcode 26
+      - name: Select available released Xcode
         shell: bash
         run: |
           set -euo pipefail
-          selected="$(find /Applications -maxdepth 1 -name 'Xcode_26*.app' | sort -V | tail -1)"
+          mkdir -p diagnostics
+          find /Applications -maxdepth 1 -name 'Xcode*.app' | sort -V | tee diagnostics/installed-xcodes.txt
+          selected="$(find -E /Applications -maxdepth 1 -type d -regex '.*/Xcode_(26|27)(\.[0-9]+)*\.app' | sort -V | tail -1)"
           test -n "$selected"
           echo "DEVELOPER_DIR=$selected/Contents/Developer" >> "$GITHUB_ENV"
       - name: Install project tools
@@ -51,7 +53,7 @@ jobs:
         if: success()
         uses: actions/upload-artifact@v7
         with:
-          name: SequoiaCast-0.12.1-macos15-arm64
+          name: SequoiaCast-0.12.11-macos15-arm64
           path: dist/
           if-no-files-found: error
           retention-days: 14
