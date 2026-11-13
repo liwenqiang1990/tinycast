@@ -1,4 +1,6 @@
-# SequoiaCast — Tinycast 0.12.11 on macOS 15
+# SequoiaCast — Tinycast compatibility for macOS Sequoia and later
+
+SequoiaCast brings newer Tinycast releases, following the last upstream release with Sequoia support, to macOS Sequoia and later on arm64 Macs.
 
 Release `v0.12.11-sequoia.1` ships build 13. See [the upgrade audit and validation](UPGRADE-0.12.11.md), including test coverage and limits.
 The [previous validation record](VALIDATION.md) describes v0.12.1 and does not establish v0.12.11 compatibility.

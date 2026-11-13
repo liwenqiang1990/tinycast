@@ -1,4 +1,4 @@
-> This compatibility branch builds **SequoiaCast** for macOS 15. See [compatibility build and validation](../compat/README.md) for its isolated identity, signing and manual-only workflow. Upstream instructions below describe the original macOS 26 channel.
+> This compatibility branch builds **SequoiaCast** for macOS Sequoia and later on arm64 Macs, bringing newer Tinycast releases to systems no longer supported upstream. See [compatibility build and validation](../compat/README.md) for its isolated identity, signing and manual-only workflow. Upstream instructions below describe the original macOS 26 channel.
 
 # UI & Design System
 
