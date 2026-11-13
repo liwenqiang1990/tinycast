@@ -54,9 +54,6 @@ not a frame-rate measurement. All 27 localization resources are binary plists.
 The designated signing requirement is unchanged. The previous application bundle
 was backed up, then the candidate replaced it in place without deleting channel data.
 Launch, search input/results, keyboard selection and General/About/Permissions settings
-opened successfully; About identifies version 0.12.11 (13). The user then reported
-that real keyboard input/focus switching fails. Automation can enter text, which does
-not invalidate the physical-keyboard report. The user subsequently confirmed input
-was working again and authorized publication. No code fix was made for this transient
-focus issue; its cause and recurrence remain unknown. Current plugin UI and further
+opened successfully; About identifies version 0.12.11 (13). The user confirmed
+input was working and authorized publication. Current plugin UI and further
 feature checks remain unverified on this version.

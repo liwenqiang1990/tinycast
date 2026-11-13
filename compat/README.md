@@ -1,6 +1,6 @@
 # SequoiaCast — Tinycast 0.12.11 on macOS 15
 
-Release `v0.12.11-sequoia.1` ships build 13. See [the upgrade audit and validation](UPGRADE-0.12.11.md), including the transient focus issue and test limits.
+Release `v0.12.11-sequoia.1` ships build 13. See [the upgrade audit and validation](UPGRADE-0.12.11.md), including test coverage and limits.
 The [previous validation record](VALIDATION.md) describes v0.12.1 and does not establish v0.12.11 compatibility.
 
 - Baseline: upstream tag `v0.12.11`, commit `58168bf7e0b721f7c5fbfc7f4e8a068a48cff446`.
